@@ -82,7 +82,7 @@ public class Character : MonoBehaviour
         this.characterMovement *= (1 - this.dampening);
         Vector3 characterForward = this.characterMovement;
         characterForward.y = 0.0f;
-        if (characterForward.sqrMagnitude > 0.0f)
+        if (characterForward.sqrMagnitude > 0.0001f)
         {
             this.transform.forward = characterForward.normalized;
         }
