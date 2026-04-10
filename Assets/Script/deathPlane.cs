@@ -10,7 +10,14 @@ public class deathPlane : MonoBehaviour
     [SerializeField]
     Rigidbody character;
 
-  
+    leverFunction lever;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        lever = GameObject.Find("lever").GetComponent<leverFunction>();
+        lever.setLever(true);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,7 +39,7 @@ public class deathPlane : MonoBehaviour
             controller.enabled = true;
         
     }
-
+        lever.setLever(false);
 
 
     }

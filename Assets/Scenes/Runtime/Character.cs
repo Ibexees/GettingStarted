@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     [SerializeField]
     private Transform cameraTransform;
     private Vector3 characterMovement;
+    private Vector3 combinedMovement;
     private Vector3 jumpVelocity;
     private Vector3 characterGravity;
     void Start()
@@ -58,6 +59,34 @@ public class Character : MonoBehaviour
         this.jumpCooldownTimer -= Time.deltaTime;
     }
 
+    Vector3 GetPlatformVelocity()
+    {
+        RaycastHit hit;
+
+        // Raycast nach unten
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        {
+            
+            // Layer check
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Platform"))
+            {
+                
+                movingPlatform platform = hit.collider.GetComponent<movingPlatform>();
+                Debug.Log("plat:" +platform);
+
+                if (platform != null)
+                {
+                    Debug.Log("Platform found");
+                    return platform.GetVelocity();
+                }
+            }
+        }
+
+        return Vector3.zero;
+    }
+
+
+
     void Update()
     {
         this.HandleJumping();
@@ -86,6 +115,23 @@ public class Character : MonoBehaviour
         {
             this.transform.forward = characterForward.normalized;
         }
-        this.controller.Move(this.characterMovement);
+
+        setCombinedMovement();
+        
+        this.controller.Move(this.combinedMovement);
+    }
+
+    private void setCombinedMovement()
+    {
+        if (controller.isGrounded)
+        {
+            Vector3 velocity = new Vector3(GetPlatformVelocity().x, 0, GetPlatformVelocity().z);
+            combinedMovement = characterMovement + velocity * Time.deltaTime;
+        }
+        else
+        {
+            combinedMovement = characterMovement;
+        }
+        
     }
 }
