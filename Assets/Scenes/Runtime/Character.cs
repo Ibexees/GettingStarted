@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class Character : MonoBehaviour
@@ -28,9 +29,16 @@ public class Character : MonoBehaviour
     void Start()
     {
         this.controller = this.GetComponent<CharacterController>();
+        this.animator = this.GetComponent<Animator>();
         this.moveAction = InputSystem.actions.FindAction("Move");
         this.jumpAction = InputSystem.actions.FindAction("Jump");
         this.jumpCooldownTimer = 0.0f;
+    }
+
+    private Animator animator;
+    private void  SetAnimationState(Vector2 inputMovement)
+    {
+        this.animator.SetFloat("RunningSpeed", inputMovement.x);
     }
 
     void HandleJumping()
@@ -89,6 +97,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        
         this.HandleJumping();
         var inputMovement = this.moveAction.ReadValue<Vector2>();
         var inputRightDirection = this.cameraTransform.right;
@@ -97,6 +106,8 @@ public class Character : MonoBehaviour
         inputForwardDirection.y = 0.0f;
         inputRightDirection.Normalize();
         inputForwardDirection.Normalize();
+
+        this.SetAnimationState(inputMovement);
         //Since we do not use the physics system, we have to simulate gravity ourselves
         if (this.controller.isGrounded)
         {
