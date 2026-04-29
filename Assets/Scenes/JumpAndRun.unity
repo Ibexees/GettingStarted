@@ -2683,6 +2683,10 @@ MonoBehaviour:
   jumpSpeed: 1.2
   dampening: 0.1
   cameraTransform: {fileID: 845037994}
+  audioSource: {fileID: 0}
+  sfxMixerGroup: {fileID: 0}
+  walkingSound: {fileID: 0}
+  jumpingSound: {fileID: 0}
 --- !u!143 &850485381
 CharacterController:
   m_ObjectHideFlags: 0
@@ -10523,11 +10527,6 @@ MonoBehaviour:
   rotationSpeed: 90
   collectSound: {fileID: 8300000, guid: 4b05d4003ef157844aae49122a79ecd6, type: 3}
   sfxMixerGroup: {fileID: 8895863241389582693, guid: 90e557e986200a9408d4a2974fc5a908, type: 2}
---- !u!4 &2057819233 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 524593791332329412, guid: d2d02b7e6279fb44b8f14248c78f5aa2, type: 3}
-  m_PrefabInstance: {fileID: 862971893}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2103656478 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3499700309019908369, guid: da12def69ec286a4c92684291f107550, type: 3}
@@ -10545,7 +10544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4932c7ff2fb3dbd4bbc30af1ac720914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::curveAnimation
-  a: {fileID: 2057819233}
+  a: {fileID: 541939214}
   b: {fileID: 1177183801}
   speed: 0.1
   curve:

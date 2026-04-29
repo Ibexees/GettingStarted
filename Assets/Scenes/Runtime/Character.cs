@@ -1,5 +1,5 @@
-using Mono.Cecil.Cil;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 public class Character : MonoBehaviour
 {
@@ -26,6 +26,14 @@ public class Character : MonoBehaviour
     private Vector3 combinedMovement;
     private Vector3 jumpVelocity;
     private Vector3 characterGravity;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource walkingAudioSource;
+    [SerializeField] private AudioSource jumpingAudioSource;
+    [SerializeField] private AudioMixerGroup sfxMixerGroup;
+    [SerializeField] private AudioClip walkingSound;
+    [SerializeField] private AudioClip jumpingSound;
+
     void Start()
     {
         this.controller = this.GetComponent<CharacterController>();
@@ -33,12 +41,13 @@ public class Character : MonoBehaviour
         this.moveAction = InputSystem.actions.FindAction("Move");
         this.jumpAction = InputSystem.actions.FindAction("Jump");
         this.jumpCooldownTimer = 0.0f;
+
     }
 
     private Animator animator;
     private void  SetAnimationState(Vector2 inputMovement)
     {
-        this.animator.SetFloat("RunningSpeed", inputMovement.x);
+        this.animator.SetFloat("RunningSpeed", inputMovement.magnitude);
     }
 
     void HandleJumping()
@@ -55,6 +64,7 @@ public class Character : MonoBehaviour
             this.jumpVelocity.y = this.jumpSpeed;
             this.jumpCooldownTimer = this.jumpCooldown;
             this.isJumping = true;
+            this.jumpingAudioSource.PlayOneShot(this.jumpingSound);
         }
         if (this.jumpVelocity.y > 0.0f)
         {
@@ -126,10 +136,33 @@ public class Character : MonoBehaviour
         {
             this.transform.forward = characterForward.normalized;
         }
-
+        HandleWalkingSound(inputMovement);
         setCombinedMovement();
         
         this.controller.Move(this.combinedMovement);
+    }
+
+    private void HandleWalkingSound(Vector2 inputMovement)
+    {
+        bool isMoving = inputMovement.sqrMagnitude > 0.01f;
+        bool shouldWalk = isMoving && this.controller.isGrounded;
+
+        if (shouldWalk)
+        {
+            if (this.walkingAudioSource.clip != this.walkingSound || !this.walkingAudioSource.isPlaying)
+            {
+                this.walkingAudioSource.clip = this.walkingSound;
+                this.walkingAudioSource.loop = true;
+                this.walkingAudioSource.Play();
+            }
+        }
+        else
+        {
+            if (this.walkingAudioSource.clip == this.walkingSound && this.walkingAudioSource.isPlaying)
+            {
+                this.walkingAudioSource.Stop();
+            }
+        }
     }
 
     private void setCombinedMovement()
