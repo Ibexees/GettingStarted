@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Character : MonoBehaviour
 {
     private bool isJumping = false;
+    private bool wasGrounded;
     private float jumpCooldownTimer;
     private CharacterController controller;
     private InputAction moveAction;
@@ -33,6 +34,9 @@ public class Character : MonoBehaviour
     [SerializeField] private AudioMixerGroup sfxMixerGroup;
     [SerializeField] private AudioClip walkingSound;
     [SerializeField] private AudioClip jumpingSound;
+
+
+    [SerializeField] private ParticleSystem JumpEffect;
 
     void Start()
     {
@@ -65,6 +69,7 @@ public class Character : MonoBehaviour
             this.jumpCooldownTimer = this.jumpCooldown;
             this.isJumping = true;
             this.jumpingAudioSource.PlayOneShot(this.jumpingSound);
+         
         }
         if (this.jumpVelocity.y > 0.0f)
         {
@@ -140,6 +145,15 @@ public class Character : MonoBehaviour
         setCombinedMovement();
         
         this.controller.Move(this.combinedMovement);
+
+        bool isGroundedNow = !isJumping;
+
+        if (!wasGrounded && isGroundedNow)
+        {
+            JumpEffect.Play();
+        }
+
+        wasGrounded = isGroundedNow;
     }
 
     private void HandleWalkingSound(Vector2 inputMovement)
