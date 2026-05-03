@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
-public class Character : MonoBehaviour
+public class PlayerCharacter : MonoBehaviour
 {
     private bool isJumping = false;
     private bool wasGrounded;
@@ -35,7 +35,6 @@ public class Character : MonoBehaviour
     [SerializeField] private AudioClip walkingSound;
     [SerializeField] private AudioClip jumpingSound;
 
-
     [SerializeField] private ParticleSystem JumpEffect;
 
     void Start()
@@ -53,6 +52,7 @@ public class Character : MonoBehaviour
     {
         this.animator.SetFloat("RunningSpeed", inputMovement.magnitude);
     }
+
 
     void HandleJumping()
     {
@@ -80,6 +80,17 @@ public class Character : MonoBehaviour
             this.jumpVelocity = Vector3.zero;
         }
         this.jumpCooldownTimer -= Time.deltaTime;
+    }
+
+    public void Bounce(float force)
+    {
+        this.characterGravity = Vector3.zero;
+        this.jumpVelocity = Vector3.zero;
+        this.jumpVelocity.y = force;
+        this.jumpCooldownTimer = this.jumpCooldown;
+        this.isJumping = true;
+       
+        
     }
 
     Vector3 GetPlatformVelocity()
@@ -178,6 +189,8 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+ 
 
     private void setCombinedMovement()
     {
