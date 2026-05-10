@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Parent" style="flex-grow: 1; max-height: 20%; min-height: 0; background-image: url(&quot;project://database/Assets/UIAssets/UIAssets/KenneyRPGUI/PNG/buttonLong_brown.png?fileID=2800000&amp;guid=e1b37c399f270ee40b1efce762deb577&amp;type=3#buttonLong_brown&quot;); top: 80%;">
+        <ui:Label text="Mais mit Käse Choclo con queso" style="top: 15%; left: 3%; bottom: 15%; right: 3%; flex-grow: 1; min-width: 3%; min-height: 5%; max-width: 93%; max-height: 55%; font-size: 40px; -unity-font-style: normal; color: rgb(255, 255, 255); flex-wrap: nowrap; white-space: normal;"/>
+    </ui:VisualElement>
+</ui:UXML>

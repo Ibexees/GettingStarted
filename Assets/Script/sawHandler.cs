@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -16,6 +17,8 @@ public class sawHandler : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] ParticleSystem cuttingParticles;
+
+    [SerializeField] float damagePerSecond;
 
     private bool isCutting;
 
@@ -70,4 +73,16 @@ public class sawHandler : MonoBehaviour
         audioSource.Play();
 
     }
+
+    private void OnTriggerStay(Collider other) 
+    {
+        PlayerCharacter character = other.GetComponentInParent<PlayerCharacter>();
+
+        if (character != null)
+        {
+            character.InflictDamage(damagePerSecond * Time.fixedDeltaTime);
+        }
+    }
+
+        
 }

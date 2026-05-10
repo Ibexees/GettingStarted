@@ -1,6 +1,8 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using static Codice.Client.Common.EventTracking.TrackFeatureUseEvent.Features.DesktopGUI.Filters;
 public class PlayerCharacter : MonoBehaviour
 {
     private bool isJumping = false;
@@ -16,6 +18,8 @@ public class PlayerCharacter : MonoBehaviour
     private float gravity;
     [SerializeField]
     private float characterSpeed;
+    [SerializeField]
+    private Vector3 initialPosition;
 
     [SerializeField]
     private float jumpSpeed;
@@ -37,6 +41,23 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField] private ParticleSystem JumpEffect;
 
+    [SerializeField] private float maxHealth;
+    private float currentHealth;
+    public float GetCurrentHealth() => this.currentHealth;
+    public float GetMaxHealth() => this.maxHealth;
+
+    public void InflictDamage(float amount)
+    { 
+        this.currentHealth -= amount;
+        this.currentHealth = Mathf.Clamp(this.currentHealth, 0.0f, this.maxHealth);
+        if (currentHealth == 0)
+        {
+            UIManager.Instance.GameOver();
+            this.enabled = false;
+            return;
+        }
+    }
+
     void Start()
     {
         this.controller = this.GetComponent<CharacterController>();
@@ -44,6 +65,7 @@ public class PlayerCharacter : MonoBehaviour
         this.moveAction = InputSystem.actions.FindAction("Move");
         this.jumpAction = InputSystem.actions.FindAction("Jump");
         this.jumpCooldownTimer = 0.0f;
+        this.currentHealth = GetMaxHealth();
 
     }
 
@@ -106,17 +128,32 @@ public class PlayerCharacter : MonoBehaviour
             {
                 
                 movingPlatform platform = hit.collider.GetComponent<movingPlatform>();
-                Debug.Log("plat:" +platform);
+                //Debug.Log("plat:" +platform);
 
                 if (platform != null)
                 {
-                    Debug.Log("Platform found");
+                    //Debug.Log("Platform found");
                     return platform.GetVelocity();
                 }
             }
         }
 
         return Vector3.zero;
+    }
+
+    public void respawn()
+    {
+        controller.enabled = false;
+
+        this.currentHealth = maxHealth;
+
+        // Position setzen
+        this.transform.position = initialPosition;
+
+        // CharacterController wieder aktivieren
+        controller.enabled = true;
+
+        
     }
 
 

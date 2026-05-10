@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Trap
+  - mortal
   layers:
   - Default
   - TransparentFX

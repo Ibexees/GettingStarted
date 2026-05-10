@@ -14,6 +14,7 @@ public class fishHandler : MonoBehaviour
     [SerializeField] private List<float> movingTimes;
     [SerializeField] private float waitingTime;
     [SerializeField] private int initialRotation;
+    [SerializeField] private Jewel relatedJewel;
     private bool isPlaying = false;
     private Sequence sequence;
     private Vector3 lastPosition;
@@ -113,9 +114,22 @@ public class fishHandler : MonoBehaviour
                 transform.DOScale(new Vector3(0.12f, 0.02f, 0.12f), 0.15f)
                 .OnComplete(() =>
                 {
-                    transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f);
+                    if (this.CompareTag("mortal"))
+                    {
+                        sequence.Kill();
+                        relatedJewel.SpawnJewel();
+                        Destroy(this.gameObject);
+                    }
+                    else
+                    {
+                        transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f);
+                    }
                 });
-            }
+        }
+        else
+        {
+            character.InflictDamage(25);
+        }
     }
 
     private void Start()

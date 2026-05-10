@@ -37,6 +37,11 @@ public class MageController : MonoBehaviour
 
     [SerializeField] private ParticleSystem JumpEffect;
 
+    [SerializeField] private float maxHealth;
+    private float currentHealth;
+    public float GetCurrentHealth() => this.currentHealth;
+    public float GetMaxHealth() => this.maxHealth;
+
     void Start()
     {
         this.controller = this.GetComponent<CharacterController>();

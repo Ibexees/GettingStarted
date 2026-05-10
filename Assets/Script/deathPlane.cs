@@ -25,18 +25,26 @@ public class deathPlane : MonoBehaviour
 
         Rigidbody rb = other.GetComponent<Rigidbody>();
 
+
+        
         CharacterController controller = other.GetComponent<CharacterController>();
+        PlayerCharacter character = other.GetComponent<PlayerCharacter>();
 
         if (controller != null)
         {
+
+            character.InflictDamage(100);
+            
+            //TODO RESPAWN BUTTONS and no automatic Reset on Death
+
             // CharacterController deaktivieren
-            controller.enabled = false;
+           /* controller.enabled = false;
 
             // Position setzen
             other.transform.position = respawnTransform.position;
 
             // CharacterController wieder aktivieren
-            controller.enabled = true;
+            controller.enabled = true;*/
         
     }
         lever.setLever(false);

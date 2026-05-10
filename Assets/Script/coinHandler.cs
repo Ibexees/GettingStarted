@@ -31,6 +31,7 @@ public class coinHandler : MonoBehaviour
         audioSource.outputAudioMixerGroup = sfxMixerGroup;
         audioSource.Play();
         Destroy(collectSoundGameObject, collectSound.length);
+        UIManager.Instance.CollectCoin();
 
         Destroy(this.gameObject);
         
