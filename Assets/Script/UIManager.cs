@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.IO.Compression;
 using TMPro;
@@ -14,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI GameOverText;
     [SerializeField] private CanvasGroup GameOverGroup;
+    [SerializeField] private CanvasGroup Health;
+    [SerializeField] private CanvasGroup Coin;
     [SerializeField] private Button tryAgainButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Image victoryImage;
@@ -46,6 +49,8 @@ public class UIManager : MonoBehaviour
     public void GameOver()
     {
         StartCoroutine(FadeIn(GameOverGroup));
+        StartCoroutine(FadeOut(Health,false));
+        StartCoroutine(FadeOut(Coin,false));
     }
 
     public void Victory()
@@ -81,7 +86,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    IEnumerator FadeOut(CanvasGroup canvasGroup)
+    IEnumerator FadeOut(CanvasGroup canvasGroup, Boolean withReset)
     {
 
         float time = 0f;
@@ -96,8 +101,11 @@ public class UIManager : MonoBehaviour
         }
 
         canvasGroup.alpha = 0f;
-        DOTween.KillAll();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (withReset)
+        {
+            DOTween.KillAll();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
     }
 
@@ -116,12 +124,7 @@ public class UIManager : MonoBehaviour
 
     void TryAgain()
     {
-        StartCoroutine(FadeOut(GameOverGroup));
-        /*character.respawn();
-        coinCounter = 0;
-        string coinText = coinCounter.ToString();
-        this.coinCounterText.text = coinText;*/
-        
+        StartCoroutine(FadeOut(GameOverGroup, true));     
     }
     void Quit()
     { 

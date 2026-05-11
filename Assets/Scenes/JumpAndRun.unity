@@ -7829,6 +7829,7 @@ GameObject:
   - component: {fileID: 498581294}
   - component: {fileID: 498581296}
   - component: {fileID: 498581295}
+  - component: {fileID: 498581297}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -7894,6 +7895,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498581293}
   m_CullTransparentMesh: 1
+--- !u!225 &498581297
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498581293}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!4 &504826686 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4433363324488572108, guid: eb11760dda5b2b549ba0328486873df6, type: 3}
@@ -24359,6 +24372,8 @@ MonoBehaviour:
   healthBar: {fileID: 1314787612}
   GameOverText: {fileID: 1623264940}
   GameOverGroup: {fileID: 1948444163}
+  Health: {fileID: 1804079911}
+  Coin: {fileID: 498581297}
   tryAgainButton: {fileID: 1684590025}
   quitButton: {fileID: 1911171508}
   victoryImage: {fileID: 1353029396}
@@ -26536,6 +26551,7 @@ GameObject:
   - component: {fileID: 1804079908}
   - component: {fileID: 1804079910}
   - component: {fileID: 1804079909}
+  - component: {fileID: 1804079911}
   m_Layer: 5
   m_Name: Health Background
   m_TagString: Untagged
@@ -26601,6 +26617,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1804079907}
   m_CullTransparentMesh: 1
+--- !u!225 &1804079911
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804079907}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1822365087
 PrefabInstance:
   m_ObjectHideFlags: 0
