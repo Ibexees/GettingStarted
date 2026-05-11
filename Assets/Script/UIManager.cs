@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button tryAgainButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private Image victoryImage;
+    [SerializeField] private AudioSource unlockSound;
 
     private static UIManager instance = null;
     public static UIManager Instance => instance;
@@ -26,9 +27,12 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     { 
-        instance = this;
-        
-        
+        instance = this; 
+    }
+
+    public void unlock()
+    {
+        unlockSound.Play();
     }
 
     public void CollectCoin()

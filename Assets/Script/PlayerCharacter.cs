@@ -183,11 +183,21 @@ public class PlayerCharacter : MonoBehaviour
         this.characterMovement += inputRightDirection * inputMovement.x * this.characterSpeed * Time.deltaTime;
         this.characterMovement += inputForwardDirection * inputMovement.y * this.characterSpeed * Time.deltaTime;
         this.characterMovement *= (1 - this.dampening);
-        Vector3 characterForward = this.characterMovement;
+        /*Vector3 characterForward = this.characterMovement;
         characterForward.y = 0.0f;
         if (characterForward.sqrMagnitude > 0.0001f)
         {
             this.transform.forward = characterForward.normalized;
+        }*/
+        Vector3 moveDirection =
+        inputRightDirection * inputMovement.x +
+        inputForwardDirection * inputMovement.y;
+
+        moveDirection.y = 0f;
+
+        if (moveDirection.sqrMagnitude > 0.001f)
+        {
+            transform.forward = moveDirection.normalized;
         }
         HandleWalkingSound(inputMovement);
         setCombinedMovement();

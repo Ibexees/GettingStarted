@@ -15,6 +15,7 @@ public class Jewel : MonoBehaviour
         defeatCount++;
         if (defeatCount == 3)
         {
+            UIManager.Instance.unlock();
             this.gameObject.SetActive(true);
             StartCoroutine(SpawnAnimation(duration));
         }
